@@ -10,10 +10,11 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 0, // Data is considered stale immediately
-            refetchOnWindowFocus: true, // Refetch when window regains focus
-            refetchOnMount: true, // Refetch when component mounts
+            staleTime: 5 * 60 * 1000, // Data is fresh for 5 minutes
+            refetchOnWindowFocus: false, // Don't refetch when window regains focus
+            refetchOnMount: false, // Don't refetch when component mounts
             retry: 1,
+            refetchOnReconnect: true, // Refetch when reconnecting to network
           },
         },
       })

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Navigation } from '@/components/navigation';
 import { moviesApi, actorsApi, type Actor } from '@/lib/api';
-import { Film, Users, X, Plus } from 'lucide-react';
+import { Film, X, Plus } from 'lucide-react';
 
 export default function CreateMoviePage() {
   const router = useRouter();
@@ -23,15 +23,10 @@ export default function CreateMoviePage() {
   const [success, setSuccess] = useState(false);
 
   // Fetch all actors for selection
-  const { data: actors = [], refetch: refetchActors } = useQuery({
+  const { data: actors = [] } = useQuery({
     queryKey: ['actors'],
     queryFn: () => actorsApi.getAll(),
   });
-
-  // Refetch actors when component mounts
-  useEffect(() => {
-    refetchActors();
-  }, [refetchActors]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });

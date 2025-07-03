@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense, useEffect } from 'react';
+import { useState, Suspense, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Navigation } from '@/components/navigation';
@@ -16,23 +16,18 @@ function ActorsPageContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  const { data: actors, isLoading, error, refetch } = useQuery({
+  const { data: actors, isLoading, error } = useQuery({
     queryKey: ['actors', searchQuery],
     queryFn: () => actorsApi.getAll(searchQuery || undefined),
   });
 
-  // Refetch data when component mounts
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
-  const handleSearch = (query: string) => {
+  const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
     setCurrentPage(1);
     const params = new URLSearchParams();
     if (query) params.set('search', query);
     router.push(`/actors?${params.toString()}`);
-  };
+  }, [router]);
 
   const filteredActors = actors || [];
   const totalPages = Math.ceil(filteredActors.length / itemsPerPage);
@@ -80,6 +75,7 @@ function ActorsPageContent() {
           placeholder="Search actors by name or nationality..."
           onSearch={handleSearch}
           className="max-w-md"
+          initialValue={searchQuery}
         />
       </div>
 

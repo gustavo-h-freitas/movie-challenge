@@ -7,18 +7,21 @@ interface SearchProps {
   placeholder?: string;
   onSearch: (query: string) => void;
   className?: string;
+  initialValue?: string;
 }
 
-export function SearchInput({ placeholder = 'Search...', onSearch, className = '' }: SearchProps) {
-  const [query, setQuery] = useState('');
+export function SearchInput({ placeholder = 'Search...', onSearch, className = '', initialValue = '' }: SearchProps) {
+  const [query, setQuery] = useState(initialValue);
 
   useEffect(() => {
+    if (query === initialValue) return; // Don't trigger search for initial value
+
     const timer = setTimeout(() => {
       onSearch(query);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [query, onSearch]);
+  }, [query, onSearch, initialValue]);
 
   return (
     <div className={`relative ${className}`}>
