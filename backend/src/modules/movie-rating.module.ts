@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { MovieRatingController } from '../controllers/movie-rating.controller';
 import { MovieRatingService } from '../services/movie-rating.service';
-import { MovieRating } from '../entities/movie-rating.entity';
-import { Movie } from '../entities/movie.entity';
+import { DataProvidersModule } from '../data-providers/data-providers.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MovieRating, Movie])],
+  imports: [DataProvidersModule],
   controllers: [MovieRatingController],
   providers: [MovieRatingService],
   exports: [MovieRatingService],

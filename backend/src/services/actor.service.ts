@@ -1,66 +1,42 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Injectable, Inject } from '@nestjs/common';
 import { Actor } from '../entities/actor.entity';
 import { Movie } from '../entities/movie.entity';
 import { CreateActorDto, UpdateActorDto } from '../dto/actor.dto';
+import { ActorDataProvider } from '../data-providers/interfaces/actor-data-provider.interface';
+import { ACTOR_DATA_PROVIDER } from '../data-providers/tokens/data-provider.tokens';
 
 @Injectable()
 export class ActorService {
   constructor(
-    @InjectRepository(Actor)
-    private actorRepository: Repository<Actor>,
-    @InjectRepository(Movie)
-    private movieRepository: Repository<Movie>,
+    @Inject(ACTOR_DATA_PROVIDER)
+    private actorDataProvider: ActorDataProvider,
   ) { }
 
   async create(createActorDto: CreateActorDto): Promise<Actor> {
-    const actor = this.actorRepository.create(createActorDto);
-    return this.actorRepository.save(actor);
+    return this.actorDataProvider.create(createActorDto);
   }
 
   async findAll(): Promise<Actor[]> {
-    return this.actorRepository.find({
-      relations: ['movies'],
-    });
+    return this.actorDataProvider.findAll();
   }
 
   async findOne(id: number): Promise<Actor> {
-    const actor = await this.actorRepository.findOne({
-      where: { id },
-      relations: ['movies'],
-    });
-
-    if (!actor) {
-      throw new NotFoundException(`Actor with ID ${id} not found`);
-    }
-
-    return actor;
+    return this.actorDataProvider.findOne(id);
   }
 
   async search(query: string): Promise<Actor[]> {
-    return this.actorRepository.find({
-      where: [
-        { name: Like(`%${query}%`) },
-        { nationality: Like(`%${query}%`) },
-      ],
-      relations: ['movies'],
-    });
+    return this.actorDataProvider.search(query);
   }
 
   async update(id: number, updateActorDto: UpdateActorDto): Promise<Actor> {
-    const actor = await this.findOne(id);
-    Object.assign(actor, updateActorDto);
-    return this.actorRepository.save(actor);
+    return this.actorDataProvider.update(id, updateActorDto);
   }
 
   async remove(id: number): Promise<void> {
-    const actor = await this.findOne(id);
-    await this.actorRepository.remove(actor);
+    return this.actorDataProvider.remove(id);
   }
 
   async getMoviesByActor(id: number): Promise<Movie[]> {
-    const actor = await this.findOne(id);
-    return actor.movies;
+    return this.actorDataProvider.getMoviesByActor(id);
   }
 } 

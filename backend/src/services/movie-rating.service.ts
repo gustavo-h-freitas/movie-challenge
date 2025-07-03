@@ -1,66 +1,37 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, Inject } from '@nestjs/common';
 import { MovieRating } from '../entities/movie-rating.entity';
-import { Movie } from '../entities/movie.entity';
 import { CreateMovieRatingDto, UpdateMovieRatingDto } from '../dto/movie-rating.dto';
+import { MovieRatingDataProvider } from '../data-providers/interfaces/movie-rating-data-provider.interface';
+import { MOVIE_RATING_DATA_PROVIDER } from '../data-providers/tokens/data-provider.tokens';
 
 @Injectable()
 export class MovieRatingService {
   constructor(
-    @InjectRepository(MovieRating)
-    private movieRatingRepository: Repository<MovieRating>,
-    @InjectRepository(Movie)
-    private movieRepository: Repository<Movie>,
+    @Inject(MOVIE_RATING_DATA_PROVIDER)
+    private movieRatingDataProvider: MovieRatingDataProvider,
   ) { }
 
   async create(createMovieRatingDto: CreateMovieRatingDto): Promise<MovieRating> {
-    const movie = await this.movieRepository.findOne({
-      where: { id: createMovieRatingDto.movieId },
-    });
-
-    if (!movie) {
-      throw new NotFoundException(`Movie with ID ${createMovieRatingDto.movieId} not found`);
-    }
-
-    const rating = this.movieRatingRepository.create(createMovieRatingDto);
-    return this.movieRatingRepository.save(rating);
+    return this.movieRatingDataProvider.create(createMovieRatingDto);
   }
 
   async findAll(): Promise<MovieRating[]> {
-    return this.movieRatingRepository.find({
-      relations: ['movie'],
-    });
+    return this.movieRatingDataProvider.findAll();
   }
 
   async findOne(id: number): Promise<MovieRating> {
-    const rating = await this.movieRatingRepository.findOne({
-      where: { id },
-      relations: ['movie'],
-    });
-
-    if (!rating) {
-      throw new NotFoundException(`Movie rating with ID ${id} not found`);
-    }
-
-    return rating;
+    return this.movieRatingDataProvider.findOne(id);
   }
 
   async findByMovie(movieId: number): Promise<MovieRating[]> {
-    return this.movieRatingRepository.find({
-      where: { movieId },
-      relations: ['movie'],
-    });
+    return this.movieRatingDataProvider.findByMovie(movieId);
   }
 
   async update(id: number, updateMovieRatingDto: UpdateMovieRatingDto): Promise<MovieRating> {
-    const rating = await this.findOne(id);
-    Object.assign(rating, updateMovieRatingDto);
-    return this.movieRatingRepository.save(rating);
+    return this.movieRatingDataProvider.update(id, updateMovieRatingDto);
   }
 
   async remove(id: number): Promise<void> {
-    const rating = await this.findOne(id);
-    await this.movieRatingRepository.remove(rating);
+    return this.movieRatingDataProvider.remove(id);
   }
 } 
