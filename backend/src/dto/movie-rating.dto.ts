@@ -32,4 +32,4 @@ export class UpdateMovieRatingDto {
   @IsOptional()
   @IsString()
   reviewerName?: string;
-} 
+}

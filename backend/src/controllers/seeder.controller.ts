@@ -4,7 +4,7 @@ import { ApiKeyGuard } from '../auth/api-key.guard';
 
 @Controller('seeder')
 export class SeederController {
-  constructor(private readonly seederService: SeederService) { }
+  constructor(private readonly seederService: SeederService) {}
 
   @Post()
   @UseGuards(ApiKeyGuard)
@@ -12,4 +12,4 @@ export class SeederController {
     await this.seederService.seed();
     return { message: 'Database seeded successfully!' };
   }
-} 
+}

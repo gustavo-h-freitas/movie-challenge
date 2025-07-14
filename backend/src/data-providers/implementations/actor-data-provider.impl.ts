@@ -13,7 +13,7 @@ export class ActorDataProviderImpl implements ActorDataProvider {
     private actorRepository: Repository<Actor>,
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
-  ) { }
+  ) {}
 
   async create(createActorDto: CreateActorDto): Promise<Actor> {
     const actor = this.actorRepository.create(createActorDto);
@@ -64,4 +64,4 @@ export class ActorDataProviderImpl implements ActorDataProvider {
     const actor = await this.findOne(id);
     return actor.movies;
   }
-} 
+}

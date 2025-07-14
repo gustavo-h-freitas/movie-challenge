@@ -13,13 +13,15 @@ export class MovieDataProviderImpl implements MovieDataProvider {
     private movieRepository: Repository<Movie>,
     @InjectRepository(Actor)
     private actorRepository: Repository<Actor>,
-  ) { }
+  ) {}
 
   async create(createMovieDto: CreateMovieDto): Promise<Movie> {
     const movie = this.movieRepository.create(createMovieDto);
 
     if (createMovieDto.actorIds && createMovieDto.actorIds.length > 0) {
-      const actors = await this.actorRepository.findBy({ id: In(createMovieDto.actorIds) });
+      const actors = await this.actorRepository.findBy({
+        id: In(createMovieDto.actorIds),
+      });
       movie.actors = actors;
     }
 
@@ -60,7 +62,9 @@ export class MovieDataProviderImpl implements MovieDataProvider {
     const movie = await this.findOne(id);
 
     if (updateMovieDto.actorIds) {
-      const actors = await this.actorRepository.findBy({ id: In(updateMovieDto.actorIds) });
+      const actors = await this.actorRepository.findBy({
+        id: In(updateMovieDto.actorIds),
+      });
       movie.actors = actors;
     }
 
@@ -77,4 +81,4 @@ export class MovieDataProviderImpl implements MovieDataProvider {
     const movie = await this.findOne(id);
     return movie.actors;
   }
-} 
+}

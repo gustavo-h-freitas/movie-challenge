@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  OneToMany,
+  JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Actor } from './actor.entity';
 import { MovieRating } from './movie-rating.entity';
 
@@ -25,15 +34,15 @@ export class Movie {
   @Column({ type: 'int', nullable: true })
   duration: number; // in minutes
 
-  @ManyToMany(() => Actor, actor => actor.movies)
+  @ManyToMany(() => Actor, (actor) => actor.movies)
   @JoinTable({
     name: 'movie_actors',
     joinColumn: { name: 'movie_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'actor_id', referencedColumnName: 'id' }
+    inverseJoinColumn: { name: 'actor_id', referencedColumnName: 'id' },
   })
   actors: Actor[];
 
-  @OneToMany(() => MovieRating, rating => rating.movie)
+  @OneToMany(() => MovieRating, (rating) => rating.movie)
   ratings: MovieRating[];
 
   @CreateDateColumn()
@@ -41,4 +50,4 @@ export class Movie {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

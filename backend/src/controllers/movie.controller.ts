@@ -1,11 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { MovieService } from '../services/movie.service';
 import { CreateMovieDto, UpdateMovieDto } from '../dto/movie.dto';
 import { ApiKeyGuard } from '../auth/api-key.guard';
 
 @Controller('movies')
 export class MovieController {
-  constructor(private readonly movieService: MovieService) { }
+  constructor(private readonly movieService: MovieService) {}
 
   @Post()
   @UseGuards(ApiKeyGuard)
@@ -33,7 +44,10 @@ export class MovieController {
 
   @Patch(':id')
   @UseGuards(ApiKeyGuard)
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateMovieDto: UpdateMovieDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateMovieDto: UpdateMovieDto,
+  ) {
     return this.movieService.update(id, updateMovieDto);
   }
 
@@ -42,4 +56,4 @@ export class MovieController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.movieService.remove(id);
   }
-} 
+}

@@ -1,11 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ActorService } from '../services/actor.service';
 import { CreateActorDto, UpdateActorDto } from '../dto/actor.dto';
 import { ApiKeyGuard } from '../auth/api-key.guard';
 
 @Controller('actors')
 export class ActorController {
-  constructor(private readonly actorService: ActorService) { }
+  constructor(private readonly actorService: ActorService) {}
 
   @Post()
   @UseGuards(ApiKeyGuard)
@@ -33,7 +44,10 @@ export class ActorController {
 
   @Patch(':id')
   @UseGuards(ApiKeyGuard)
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateActorDto: UpdateActorDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateActorDto: UpdateActorDto,
+  ) {
     return this.actorService.update(id, updateActorDto);
   }
 
@@ -42,4 +56,4 @@ export class ActorController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.actorService.remove(id);
   }
-} 
+}

@@ -9,4 +9,4 @@ import { DataProvidersModule } from '../data-providers/data-providers.module';
   providers: [MovieService],
   exports: [MovieService],
 })
-export class MovieModule { } 
+export class MovieModule {}

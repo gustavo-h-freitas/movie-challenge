@@ -11,4 +11,4 @@ import { MovieRating } from '../entities/movie-rating.entity';
   controllers: [SeederController],
   providers: [SeederService],
 })
-export class SeederModule { } 
+export class SeederModule {}

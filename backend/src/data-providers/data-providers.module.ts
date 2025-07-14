@@ -9,13 +9,11 @@ import { MovieRatingDataProviderImpl } from './implementations/movie-rating-data
 import {
   MOVIE_DATA_PROVIDER,
   ACTOR_DATA_PROVIDER,
-  MOVIE_RATING_DATA_PROVIDER
+  MOVIE_RATING_DATA_PROVIDER,
 } from './tokens/data-provider.tokens';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Movie, Actor, MovieRating]),
-  ],
+  imports: [TypeOrmModule.forFeature([Movie, Actor, MovieRating])],
   providers: [
     {
       provide: MOVIE_DATA_PROVIDER,
@@ -36,4 +34,4 @@ import {
     MOVIE_RATING_DATA_PROVIDER,
   ],
 })
-export class DataProvidersModule { } 
+export class DataProvidersModule {}

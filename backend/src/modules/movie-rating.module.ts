@@ -9,4 +9,4 @@ import { DataProvidersModule } from '../data-providers/data-providers.module';
   providers: [MovieRatingService],
   exports: [MovieRatingService],
 })
-export class MovieRatingModule { } 
+export class MovieRatingModule {}

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Movie } from './movie.entity';
 
 @Entity('movie_ratings')
@@ -15,7 +22,7 @@ export class MovieRating {
   @Column({ type: 'varchar', length: 255, nullable: true })
   reviewerName: string;
 
-  @ManyToOne(() => Movie, movie => movie.ratings)
+  @ManyToOne(() => Movie, (movie) => movie.ratings)
   movie: Movie;
 
   @Column({ type: 'int' })
@@ -26,4 +33,4 @@ export class MovieRating {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

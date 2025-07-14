@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Movie } from './movie.entity';
 
 @Entity('actors')
@@ -18,7 +25,7 @@ export class Actor {
   @Column({ type: 'text', nullable: true })
   biography: string;
 
-  @ManyToMany(() => Movie, movie => movie.actors)
+  @ManyToMany(() => Movie, (movie) => movie.actors)
   movies: Movie[];
 
   @CreateDateColumn()
@@ -26,4 +33,4 @@ export class Actor {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

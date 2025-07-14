@@ -1,4 +1,12 @@
-import { IsString, IsOptional, IsInt, Min, Max, IsArray, IsNumber } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsInt,
+  Min,
+  Max,
+  IsArray,
+  IsNumber,
+} from 'class-validator';
 
 export class CreateMovieDto {
   @IsString()
@@ -65,4 +73,4 @@ export class UpdateMovieDto {
   @IsArray()
   @IsNumber({}, { each: true })
   actorIds?: number[];
-} 
+}

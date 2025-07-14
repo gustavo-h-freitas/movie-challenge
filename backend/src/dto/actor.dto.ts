@@ -33,4 +33,4 @@ export class UpdateActorDto {
   @IsOptional()
   @IsString()
   biography?: string;
-} 
+}

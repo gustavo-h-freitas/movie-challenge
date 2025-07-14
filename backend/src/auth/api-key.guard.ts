@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Request } from 'express';
 
 @Injectable()
@@ -7,7 +12,8 @@ export class ApiKeyGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
-    const apiKey = request.headers['x-api-key'] || request.headers['authorization'];
+    const apiKey =
+      request.headers['x-api-key'] || request.headers['authorization'];
 
     if (!apiKey || apiKey !== `Bearer ${this.API_KEY}`) {
       throw new UnauthorizedException('Invalid API key');
@@ -15,4 +21,4 @@ export class ApiKeyGuard implements CanActivate {
 
     return true;
   }
-} 
+}

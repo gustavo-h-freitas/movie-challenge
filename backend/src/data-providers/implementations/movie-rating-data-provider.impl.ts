@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MovieRating } from '../../entities/movie-rating.entity';
 import { Movie } from '../../entities/movie.entity';
-import { CreateMovieRatingDto, UpdateMovieRatingDto } from '../../dto/movie-rating.dto';
+import {
+  CreateMovieRatingDto,
+  UpdateMovieRatingDto,
+} from '../../dto/movie-rating.dto';
 import { MovieRatingDataProvider } from '../interfaces/movie-rating-data-provider.interface';
 
 @Injectable()
@@ -13,15 +16,19 @@ export class MovieRatingDataProviderImpl implements MovieRatingDataProvider {
     private movieRatingRepository: Repository<MovieRating>,
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
-  ) { }
+  ) {}
 
-  async create(createMovieRatingDto: CreateMovieRatingDto): Promise<MovieRating> {
+  async create(
+    createMovieRatingDto: CreateMovieRatingDto,
+  ): Promise<MovieRating> {
     const movie = await this.movieRepository.findOne({
       where: { id: createMovieRatingDto.movieId },
     });
 
     if (!movie) {
-      throw new NotFoundException(`Movie with ID ${createMovieRatingDto.movieId} not found`);
+      throw new NotFoundException(
+        `Movie with ID ${createMovieRatingDto.movieId} not found`,
+      );
     }
 
     const rating = this.movieRatingRepository.create(createMovieRatingDto);
@@ -54,7 +61,10 @@ export class MovieRatingDataProviderImpl implements MovieRatingDataProvider {
     });
   }
 
-  async update(id: number, updateMovieRatingDto: UpdateMovieRatingDto): Promise<MovieRating> {
+  async update(
+    id: number,
+    updateMovieRatingDto: UpdateMovieRatingDto,
+  ): Promise<MovieRating> {
     const rating = await this.findOne(id);
     Object.assign(rating, updateMovieRatingDto);
     return this.movieRatingRepository.save(rating);
@@ -64,4 +74,4 @@ export class MovieRatingDataProviderImpl implements MovieRatingDataProvider {
     const rating = await this.findOne(id);
     await this.movieRatingRepository.remove(rating);
   }
-} 
+}

@@ -78,4 +78,4 @@ describe('MovieService', () => {
       await expect(service.findOne(999)).rejects.toThrow(NotFoundException);
     });
   });
-}); 
+});

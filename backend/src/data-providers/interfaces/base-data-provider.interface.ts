@@ -4,4 +4,4 @@ export interface BaseDataProvider<T, CreateDto, UpdateDto> {
   findOne(id: number): Promise<T>;
   update(id: number, data: UpdateDto): Promise<T>;
   remove(id: number): Promise<void>;
-} 
+}

@@ -14,7 +14,7 @@ export class SeederService {
     private actorRepository: Repository<Actor>,
     @InjectRepository(MovieRating)
     private movieRatingRepository: Repository<MovieRating>,
-  ) { }
+  ) {}
 
   async seed() {
     // Clear existing data
@@ -28,7 +28,8 @@ export class SeederService {
         name: 'Tom Hanks',
         birthDate: new Date('1956-07-09'),
         nationality: 'American',
-        biography: 'Academy Award-winning actor known for his versatile performances.',
+        biography:
+          'Academy Award-winning actor known for his versatile performances.',
       },
       {
         name: 'Meryl Streep',
@@ -60,7 +61,8 @@ export class SeederService {
     const movies = await this.movieRepository.save([
       {
         title: 'Forrest Gump',
-        description: 'The story of a man with a low IQ who accomplished great things in his life.',
+        description:
+          'The story of a man with a low IQ who accomplished great things in his life.',
         releaseYear: 1994,
         genre: 'Drama',
         director: 'Robert Zemeckis',
@@ -69,7 +71,8 @@ export class SeederService {
       },
       {
         title: 'The Devil Wears Prada',
-        description: 'A young woman becomes an assistant to a powerful fashion magazine editor.',
+        description:
+          'A young woman becomes an assistant to a powerful fashion magazine editor.',
         releaseYear: 2006,
         genre: 'Comedy',
         director: 'David Frankel',
@@ -78,7 +81,8 @@ export class SeederService {
       },
       {
         title: 'Titanic',
-        description: 'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious Titanic.',
+        description:
+          'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious Titanic.',
         releaseYear: 1997,
         genre: 'Romance',
         director: 'James Cameron',
@@ -87,7 +91,8 @@ export class SeederService {
       },
       {
         title: 'Training Day',
-        description: 'A rookie cop spends his first day as a Los Angeles narcotics officer with a rogue detective.',
+        description:
+          'A rookie cop spends his first day as a Los Angeles narcotics officer with a rogue detective.',
         releaseYear: 2001,
         genre: 'Crime',
         director: 'Antoine Fuqua',
@@ -96,7 +101,8 @@ export class SeederService {
       },
       {
         title: 'Cast Away',
-        description: 'A FedEx executive must transform himself physically and emotionally to survive a crash landing on a deserted island.',
+        description:
+          'A FedEx executive must transform himself physically and emotionally to survive a crash landing on a deserted island.',
         releaseYear: 2000,
         genre: 'Adventure',
         director: 'Robert Zemeckis',
@@ -147,4 +153,4 @@ export class SeederService {
 
     console.log('Database seeded successfully!');
   }
-} 
+}

@@ -12,13 +12,16 @@ async function bootstrap() {
   });
 
   // Enable validation pipes
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3001);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap();

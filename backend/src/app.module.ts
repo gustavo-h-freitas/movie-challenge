@@ -35,4 +35,4 @@ import { MovieRating } from './entities/movie-rating.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

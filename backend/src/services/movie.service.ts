@@ -10,7 +10,7 @@ export class MovieService {
   constructor(
     @Inject(MOVIE_DATA_PROVIDER)
     private movieDataProvider: MovieDataProvider,
-  ) { }
+  ) {}
 
   async create(createMovieDto: CreateMovieDto): Promise<Movie> {
     return this.movieDataProvider.create(createMovieDto);
@@ -39,4 +39,4 @@ export class MovieService {
   async getActorsByMovie(id: number): Promise<Actor[]> {
     return this.movieDataProvider.getActorsByMovie(id);
   }
-} 
+}
